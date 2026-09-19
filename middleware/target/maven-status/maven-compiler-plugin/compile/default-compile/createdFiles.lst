@@ -1,3 +1,4 @@
 com/edgerunners/middleware/event/SecurityEvent.class
-com/edgerunners/middleware/event/EventController.class
 com/edgerunners/middleware/MiddlewareApplication.class
+com/edgerunners/middleware/analysis/AnomalyDetector.class
+com/edgerunners/middleware/event/EventController.class
