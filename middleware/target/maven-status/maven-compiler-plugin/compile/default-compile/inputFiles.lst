@@ -2,3 +2,4 @@
 /home/sangeeth/Edgerunners-Buildathon/middleware/src/main/java/com/edgerunners/middleware/analysis/AnomalyDetector.java
 /home/sangeeth/Edgerunners-Buildathon/middleware/src/main/java/com/edgerunners/middleware/event/EventController.java
 /home/sangeeth/Edgerunners-Buildathon/middleware/src/main/java/com/edgerunners/middleware/event/SecurityEvent.java
+/home/sangeeth/Edgerunners-Buildathon/middleware/src/main/java/com/edgerunners/middleware/opa/OpaClient.java

@@ -1,6 +1,7 @@
 package com.edgerunners.middleware.analysis;
 
 import com.edgerunners.middleware.event.SecurityEvent;
+import com.edgerunners.middleware.opa.OpaClient;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,6 +11,11 @@ import java.util.List;
 public class AnomalyDetector {
 
     private final List<SecurityEvent> recentEvents = new ArrayList<>();
+    private final OpaClient opaClient;
+
+    public AnomalyDetector(OpaClient opaClient) {
+        this.opaClient = opaClient;
+    }
 
     public synchronized void analyze(SecurityEvent event) {
 
@@ -38,8 +44,18 @@ public class AnomalyDetector {
         System.out.println("SSH failures/min: " + sshFailures);
 
         if (sshFailures >= 5) {
+
             System.out.println("[ALERT] Possible SSH brute-force attack!");
             System.out.println("[ALERT] Severity: HIGH");
+
+            String decision = opaClient.decide(
+                    true,
+                    "HIGH",
+                    event.sourceIp()
+            );
+
+            System.out.println("[OPA] Decision: " + decision);
+
         } else {
             System.out.println("[NORMAL] Activity within expected range");
         }
