@@ -4,6 +4,7 @@ import com.edgerunners.middleware.event.SecurityEvent;
 import com.edgerunners.middleware.opa.OpaClient;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +26,7 @@ public class AnomalyDetector {
 
         recentEvents.removeIf(e -> {
             try {
-                long eventTime = java.time.Instant.parse(e.timestamp())
-                        .toEpochMilli();
-
+                long eventTime = Instant.parse(e.timestamp()).toEpochMilli();
                 return now - eventTime > 60_000;
             } catch (Exception ex) {
                 return false;
@@ -56,8 +55,15 @@ public class AnomalyDetector {
 
             System.out.println("[OPA] Decision: " + decision);
 
+            opaClient.triggerResponse(
+                    decision,
+                    event.sourceIp()
+            );
+
         } else {
+
             System.out.println("[NORMAL] Activity within expected range");
         }
     }
 }
+
